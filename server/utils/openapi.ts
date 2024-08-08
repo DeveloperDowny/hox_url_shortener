@@ -7,8 +7,25 @@ const spec: OpenAPIV3.Document = {
   servers: [{ url: "http://localhost:5000" }],
   paths: {
     "/api/short_links": {
-      get: { responses: { "200": { description: "" } } },
+      get: {
+        operationId: "getAllLinks",
+
+        responses: {
+          "200": {
+            description: "",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "array",
+                  items: { $ref: "#/components/schemas/ShortLink" },
+                },
+              },
+            },
+          },
+        },
+      },
       post: {
+        operationId: "createLink",
         requestBody: {
           content: {
             "application/json": {

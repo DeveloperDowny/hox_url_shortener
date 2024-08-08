@@ -24,7 +24,6 @@ shortLinkRouter.post("/", async (req, res) => {
 
 shortLinkRouter.get("/", async (req, res) => {
   const data = await getLinks();
-  console.log(data);
 
   res.json(data);
 });

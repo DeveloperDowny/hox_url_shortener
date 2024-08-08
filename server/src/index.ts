@@ -33,7 +33,7 @@ app.use((err, req, res, next) => {
     errors: err.errors,
   });
 });
-
+app.use(express.static("public"));
 app.get("/", (req: Request, res: Response) => {
   res.send("Express + TypeScript Server");
 });
@@ -54,7 +54,7 @@ app.get("/:short_link", async (req, res) => {
   res.redirect(shortLink.long_link);
 });
 
-app.use(express.static("public"));
+
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
