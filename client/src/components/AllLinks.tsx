@@ -27,7 +27,7 @@ const AllLinks = () => {
           downloadBase64File(item.qr, item.short_link);
         };
         return (
-          <div className="flex gap-[1rem] bg-white rounded-md px-[1rem] py-[1rem] justify-between">
+          <div className="flex gap-[1rem] bg-white rounded-md px-[1rem] py-[1rem] justify-between shadow-md">
             {" "}
             <div className="">
               <div className="text-xl">{item.short_link}</div>

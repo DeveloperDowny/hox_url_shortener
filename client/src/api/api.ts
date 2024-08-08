@@ -24,3 +24,16 @@ export const createLink = async (new_long_link): Promise<ShortLink> => {
   );
   return res.data;
 };
+
+export const getAnalyticsById = async (
+  sid
+): Promise<Paths.GetAnalyticsById.Responses.$200> => {
+  const client: Client = await api.getClient();
+  const res = await client.getAnalyticsById(
+    {
+      sid,
+    },
+    {}
+  );
+  return res.data;
+};
