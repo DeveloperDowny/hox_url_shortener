@@ -1,6 +1,10 @@
 import express from "express";
 import { ShortLink } from "../../types/types";
-import knex, { addLink, getLinks } from "../database/database";
+import knex, {
+  addLink,
+  getAnalyticsById,
+  getLinks,
+} from "../database/database";
 import { randomUUID } from "crypto";
 import qrcode from "qr-base64";
 
@@ -29,6 +33,11 @@ shortLinkRouter.post("/", async (req, res) => {
 shortLinkRouter.get("/", async (req, res) => {
   const data = await getLinks();
 
+  res.json(data);
+});
+
+shortLinkRouter.get("/:sid/analytics", async (req, res) => {
+  const data = await getAnalyticsById(req.params.sid);
   res.json(data);
 });
 

@@ -1,6 +1,6 @@
 import * as knex_src from "knex";
 import { config } from "./env/env";
-import { ShortLink } from "../../types/types";
+import { Analytics, ShortLink } from "../../types/types";
 
 const knex = knex_src.knex(config);
 
@@ -11,6 +11,16 @@ knex.schema.hasTable("shortlinks").then(function (exists) {
       t.string("short_link", 1024);
       t.text("long_link");
       t.text("qr");
+    });
+  }
+});
+
+knex.schema.hasTable("analytics").then(function (exists) {
+  if (!exists) {
+    return knex.schema.createTable("analytics", function (t) {
+      t.increments("id").primary();
+      t.integer("sid").unsigned().references("id").inTable("shortlinks");
+      t.string("source", 255);
     });
   }
 });
@@ -37,6 +47,49 @@ export const getLinkById = async (short_link): Promise<ShortLink> => {
     .select()
     .where("short_link", short_link);
   return res[0] as ShortLink;
+};
+
+export const getAnalyticsById = async (sid): Promise<Analytics> => {
+  let analytics: Analytics = {
+    traffic_from_qr: 0,
+    traffic_from_link: 0,
+    short_link_data: undefined,
+  };
+
+  // query database to select count where source is qr
+  const qrCount = await knex
+    .table("analytics")
+    .count("source")
+    .where("sid", sid)
+    .andWhere("source", "qr");
+
+  // query database to select count where source is link
+  const linkCount = await knex
+    .table("analytics")
+    .count("source")
+    .where("sid", sid)
+    .andWhere("source", "link");
+
+  // query database to select short link data
+  const shortLinkData = await knex
+    .table("shortlinks")
+    .select()
+    .where("id", sid);
+
+  analytics.traffic_from_qr = qrCount[0]["count(`source`)"];
+  analytics.traffic_from_link = linkCount[0]["count(`source`)"];
+  analytics.short_link_data = shortLinkData[0] as ShortLink;
+
+  console.log(analytics);
+
+  return analytics;
+};
+
+export const addAnalytics = async (sid, source) => {
+  await knex.table("analytics").insert({
+    sid: sid,
+    source: source,
+  });
 };
 
 export default knex;

@@ -7,7 +7,7 @@ import shortLinkRouter from "./routes/short_links";
 import cors from "cors";
 
 import * as OpenApiValidator from "express-openapi-validator";
-import { getLinkById } from "./database/database";
+import { addAnalytics, getLinkById } from "./database/database";
 import bodyParser from "body-parser";
 import multer from "multer";
 
@@ -61,6 +61,8 @@ app.get("/:short_link", async (req, res) => {
     return res.send("No Link Found");
   }
   console.log("Destination URL: ", shortLink.long_link);
+
+  addAnalytics(shortLink.id, ref);
 
   res.redirect(shortLink.long_link);
 });

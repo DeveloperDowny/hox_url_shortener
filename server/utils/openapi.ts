@@ -41,7 +41,7 @@ const spec: OpenAPIV3.Document = {
             content: {
               "application/json": {
                 schema: {
-                  $ref: "#/components/schemas/ShortLink",
+                  $ref: "#/components/schemas/Analytics",
                 },
               },
             },
@@ -73,6 +73,31 @@ const spec: OpenAPIV3.Document = {
         },
       },
     },
+    "/api/short_links/{sid}/analytics": {
+      get: {
+        operationId: "getAnalyticsById",
+        parameters: [
+          {
+            name: "sid",
+            in: "path",
+            required: true,
+            schema: { type: "number" },
+          },
+        ],
+        responses: {
+          "200": {
+            description: "",
+            content: {
+              "application/json": {
+                schema: {
+                  $ref: "#/components/schemas/Analytics",
+                },
+              },
+            },
+          },
+        },
+      },
+    },
   },
   components: {
     schemas: {
@@ -85,6 +110,15 @@ const spec: OpenAPIV3.Document = {
           qr: { type: "string" },
         },
         required: ["long_link"],
+      },
+      Analytics: {
+        type: "object",
+        properties: {
+          traffic_from_qr: { type: "number" },
+          traffic_from_link: { type: "number" },
+          short_link_data: { $ref: "#/components/schemas/ShortLink" },
+        },
+        required: ["traffic_from_qr", "traffic_from_link", "short_link_data"],
       },
     },
   },
