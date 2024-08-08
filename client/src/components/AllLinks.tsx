@@ -1,5 +1,7 @@
 import { getLinks } from "@/api/api";
 import { Analytics } from "@/types/types";
+import { Edit } from "@mui/icons-material";
+import { IconButton } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 
@@ -32,7 +34,13 @@ const AllLinks = () => {
           <div className="flex gap-[1rem] bg-white rounded-md px-[1rem] py-[1rem] justify-between shadow-md">
             {" "}
             <div className="">
-              <div className="text-xl">{item.short_link}</div>
+              <div className="flex gap-8 items-center mb-[0.5rem]">
+                {" "}
+                <div className="text-xl pt-[0.5rem] ">{item.short_link}</div>
+                <IconButton className="">
+                  <Edit />
+                </IconButton>
+              </div>
               <div className="">
                 <b>Short URL:</b>{" "}
                 <a
@@ -68,5 +76,7 @@ const AllLinks = () => {
     </div>
   );
 };
+
+
 
 export default AllLinks;
