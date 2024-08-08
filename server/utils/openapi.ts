@@ -32,6 +32,15 @@ const spec: OpenAPIV3.Document = {
         },
       },
     },
+    "/{short_url}": {
+      get: {
+        responses: {
+          "302": {
+            description: "redirects",
+          },
+        },
+      },
+    },
   },
   components: {
     schemas: {

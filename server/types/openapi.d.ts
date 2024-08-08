@@ -17,6 +17,14 @@ declare namespace Components {
     }
 }
 declare namespace Paths {
+    namespace $ShortUrl {
+        namespace Get {
+            namespace Responses {
+                export interface $302 {
+                }
+            }
+        }
+    }
     namespace ApiShortLinks {
         namespace Get {
             namespace Responses {
@@ -38,6 +46,8 @@ export interface OperationMethods {
 
 export interface PathsDictionary {
   ['/api/short_links']: {
+  }
+  ['/{short_url}']: {
   }
 }
 

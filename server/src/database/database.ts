@@ -31,4 +31,12 @@ export const getLinks = async (): Promise<ShortLink[]> => {
   return res;
 };
 
+export const getLinkById = async (short_link): Promise<ShortLink> => {
+  const res = await knex
+    .table("shortlinks")
+    .select()
+    .where("short_link", short_link);
+  return res[0] as ShortLink;
+};
+
 export default knex;
