@@ -73,6 +73,47 @@ const spec: OpenAPIV3.Document = {
         },
       },
     },
+    "/api/short_links/{sid}": {
+      patch: {
+        operationId: "getLinks",
+        parameters: [
+          {
+            name: "sid",
+            in: "path",
+            required: true,
+            schema: { type: "number" },
+          },
+        ],
+        requestBody: {
+          content: {
+            "application/json": {
+              schema: {
+                $ref: "#/components/schemas/ShortLink",
+              },
+            },
+          },
+        },
+        responses: {
+          "200": {
+            description: "To update the link",
+          },
+          "409": {
+            description: "Bad Request",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    error: { type: "string" },
+                  },
+                  required: ["error"],
+                },
+              },
+            },
+          },
+        },
+      },
+    },
     "/api/short_links/{sid}/analytics": {
       get: {
         operationId: "getAnalyticsById",

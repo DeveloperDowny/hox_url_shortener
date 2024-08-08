@@ -5,7 +5,29 @@ import { IconButton } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import EditLinkForm from "./EditLinkForm";
+
 const AllLinks = () => {
+  const [editDialog, setEditDialog] = React.useState({
+    open: false,
+    data: null,
+  });
+
+  const handleEditClick = (data) => {
+    setEditDialog({
+      open: true,
+      data: data,
+    });
+  };
+
+  const handleSaveEdit = async () => {};
+
   function downloadBase64File(linkSource, fileName) {
     const downloadLink = document.createElement("a");
     downloadLink.href = linkSource;
@@ -32,12 +54,16 @@ const AllLinks = () => {
         };
         return (
           <div className="flex gap-[1rem] bg-white rounded-md px-[1rem] py-[1rem] justify-between shadow-md">
-            {" "}
+            <EditDialog
+              editDialog={editDialog}
+              setEditDialog={setEditDialog}
+              handleSaveEdit={handleSaveEdit}
+            />{" "}
             <div className="">
               <div className="flex gap-8 items-center mb-[0.5rem]">
                 {" "}
                 <div className="text-xl pt-[0.5rem] ">{item.short_link}</div>
-                <IconButton className="">
+                <IconButton className="" onClick={() => handleEditClick(item)}>
                   <Edit />
                 </IconButton>
               </div>
@@ -77,6 +103,30 @@ const AllLinks = () => {
   );
 };
 
-
+const EditDialog = ({ editDialog, setEditDialog, handleSaveEdit }) => {
+  return (
+    <Dialog
+      open={editDialog.open}
+      onClose={() => setEditDialog({ open: false, data: null })}
+      maxWidth="lg"
+    >
+      <DialogTitle>Edit Short URL</DialogTitle>
+      <DialogContent className="min-w-[50rem]">
+        <EditLinkForm
+          short_link_data={editDialog.data}
+          handleClose={() => setEditDialog({ open: false, data: null })}
+        />
+      </DialogContent>
+      {/* <DialogActions>
+        <Button onClick={() => setEditDialog({ open: false, data: null })}>
+          Cancel
+        </Button>
+        <Button onClick={handleSaveEdit} variant="contained">
+          Save
+        </Button>
+      </DialogActions> */}
+    </Dialog>
+  );
+};
 
 export default AllLinks;

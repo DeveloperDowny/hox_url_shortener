@@ -8,7 +8,7 @@ knex.schema.hasTable("shortlinks").then(function (exists) {
   if (!exists) {
     return knex.schema.createTable("shortlinks", function (t) {
       t.increments("id").primary();
-      t.string("short_link", 1024);
+      t.string("short_link", 1024).unique();
       t.text("long_link");
       t.text("qr");
     });
@@ -115,6 +115,10 @@ export const getAnalyticsById = async (sid): Promise<Analytics> => {
   console.log(analytics);
 
   return analytics;
+};
+
+export const updateLink = async (sid, data) => {
+  await knex.table("shortlinks").where("id", sid).update(data);
 };
 
 export const addAnalytics = async (sid, source) => {
