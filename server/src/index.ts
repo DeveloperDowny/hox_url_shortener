@@ -8,6 +8,7 @@ import cors from "cors";
 
 import * as OpenApiValidator from "express-openapi-validator";
 import { getLinkById } from "./database/database";
+import { link } from "fs";
 
 dotenv.config();
 
@@ -40,9 +41,15 @@ app.get("/", (req: Request, res: Response) => {
 app.use("/api/short_links", shortLinkRouter);
 
 app.get("/:short_link", async (req, res) => {
+  let ref = req.query.ref ?? "link";
+  if (ref != "link" && ref != "qr") {
+    ref = "link";
+  }
+  console.log(ref);
+
   const shortLink = await getLinkById(req.params.short_link);
   if (!shortLink) {
-    res.send("No Link Found");
+    return res.send("No Link Found");
   }
   res.redirect(shortLink.long_link);
 });

@@ -1,3 +1,36 @@
+# TODO
+
+Requirements
+● [v] Create a React project written in TypeScript. [required] (2 points)
+● [v] Create an Express.js API written in TypeScript. [required] (2 points)
+● [] Use React Query to maintain server state [required in frontend] (2 points)
+● [] Use Axios to fetch data from the server [required in frontend] (2 points)
+● [v] Use MySQL, Postgres, or any SQL database of your choice [SQL is required] (2
+points)
+● [v] Use any ORM such as TypeORM, Bookshelf, or query builder such as Knex of your
+choice [Usage or ORM or query builder is required] (2 points)
+● [v] Use a UI library such as Bootstrap, Material UI, TailWind CSS, or any library of your
+choice. [Usage of a UI library is required] (2 points)
+● []Use Joi to validate the request body [required] (2 points)
+● [] Authentication is not necessary.
+● [v] Design the database schema. Save it in an SQL file during submission. (2 points)
+● [] Create a screen called “Edit Link” that allows users to create and edit short links. (2
+points)
+● [] Create a screen called “View Links” that allows users to view all the short links
+created by them. (2 points)
+● [v] Make sure the short links created are always unique. (2 points)
+● [v] When a user tries to access a short link via browser, the link should hit your API
+server which will resolve to the target link, and redirect the browser to the destination.
+(2 points)
+● [] Track how many users have clicked the link and show it in a dashboard. (2 points)
+● [] Try accessing the same short link 5 times in the same browser window, and check if
+the count increased by 5. The count may not increase correctly. Fix this. (2 points)
+● [v] Create a QR code for the short link created (2 points)
+● [] Create a download button for the QR code (2 points)
+● [] Track how many users have scanned the QR code and show it in the dashboard. (2
+points)
+● [] Aesthetic UI/UX (2 points)
+
 # Server
 
 - Joi required
