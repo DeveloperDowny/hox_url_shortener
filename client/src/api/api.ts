@@ -13,7 +13,7 @@ export const getLinks = async (): Promise<Analytics[]> => {
   return res.data;
 };
 
-export const createLink = async (new_long_link): Promise<ShortLink> => {
+export const createLink = async (new_long_link): Promise<void> => {
   const client: Client = await api.getClient();
   const res = await client.createLink(
     {},
@@ -22,10 +22,7 @@ export const createLink = async (new_long_link): Promise<ShortLink> => {
     },
     {}
   );
-  return res.data;
 };
-
-
 
 export const getAnalyticsById = async (
   sid
@@ -34,6 +31,25 @@ export const getAnalyticsById = async (
   const res = await client.getAnalyticsById(
     {
       sid,
+    },
+    {}
+  );
+  return res.data;
+};
+
+export const updateLink = async (
+  sid,
+  new_long_link,
+  new_short_link
+): Promise<Paths.UpdateLink.Responses.$200> => {
+  const client: Client = await api.getClient();
+  const res = await client.updateLink(
+    {
+      sid,
+    },
+    {
+      long_link: new_long_link,
+      short_link: new_short_link,
     },
     {}
   );

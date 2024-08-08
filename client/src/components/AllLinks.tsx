@@ -1,5 +1,7 @@
+"use client";
+
 import { getLinks } from "@/api/api";
-import { Analytics } from "@/types/types";
+import { Analytics, ShortLink } from "@/types/types";
 import { Edit } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
@@ -8,21 +10,18 @@ import React from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
-import DialogActions from "@mui/material/DialogActions";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 import EditLinkForm from "./EditLinkForm";
 
 const AllLinks = () => {
   const [editDialog, setEditDialog] = React.useState({
     open: false,
-    data: null,
+    data: null as ShortLink,
   });
 
-  const handleEditClick = (data) => {
+  const handleEditClick = (data: ShortLink) => {
     setEditDialog({
-      open: true,
-      data: data,
+      open: true as boolean,
+      data: data as ShortLink,
     });
   };
 
@@ -47,6 +46,11 @@ const AllLinks = () => {
   }
   return (
     <div className="flex flex-col gap-[1rem]">
+      <EditDialog
+        editDialog={editDialog}
+        setEditDialog={setEditDialog}
+        handleSaveEdit={handleSaveEdit}
+      />{" "}
       {data.map((analytic: Analytics, index) => {
         const item = analytic.short_link_data;
         const handleClick = (e) => {
@@ -54,11 +58,6 @@ const AllLinks = () => {
         };
         return (
           <div className="flex gap-[1rem] bg-white rounded-md px-[1rem] py-[1rem] justify-between shadow-md">
-            <EditDialog
-              editDialog={editDialog}
-              setEditDialog={setEditDialog}
-              handleSaveEdit={handleSaveEdit}
-            />{" "}
             <div className="">
               <div className="flex gap-8 items-center mb-[0.5rem]">
                 {" "}
@@ -103,7 +102,15 @@ const AllLinks = () => {
   );
 };
 
-const EditDialog = ({ editDialog, setEditDialog, handleSaveEdit }) => {
+const EditDialog = ({
+  editDialog,
+  setEditDialog,
+  handleSaveEdit,
+}: {
+  editDialog: { open: boolean; data: ShortLink };
+  setEditDialog: any;
+  handleSaveEdit: any;
+}) => {
   return (
     <Dialog
       open={editDialog.open}

@@ -3,11 +3,18 @@ import React, { FormEvent, useEffect } from "react";
 import Form from "@rjsf/mui";
 import { RJSFSchema, UiSchema } from "@rjsf/utils";
 import validator from "@rjsf/validator-ajv8";
-import { createLink } from "@/api/api";
+import { updateLink } from "@/api/api";
 import { useQueryClient } from "@tanstack/react-query";
 import { IChangeEvent } from "@rjsf/core";
+import { ShortLink } from "@/types/types";
 
-const EditLinkForm = ({ short_link_data, handleClose }) => {
+const EditLinkForm = ({
+  short_link_data,
+  handleClose,
+}: {
+  short_link_data: ShortLink;
+  handleClose: any;
+}) => {
   const formRef = React.useRef(null);
   const queryClient = useQueryClient();
   const schema: RJSFSchema = {
@@ -15,7 +22,6 @@ const EditLinkForm = ({ short_link_data, handleClose }) => {
     properties: {
       short_link: { type: "string", title: "Short URL Suffix" },
       long_link: { type: "string", title: "Destination URL" },
-      //   qr: { type: "string" },
     },
     required: ["long_link", "short_link"],
   };
@@ -43,22 +49,30 @@ const EditLinkForm = ({ short_link_data, handleClose }) => {
   const onSubmit = async (myObj: IChangeEvent, e: FormEvent) => {
     const formData = myObj.formData;
 
-    const data = await createLink(formData.long_link);
-    queryClient.invalidateQueries({ queryKey: ["links"] });
-    // reset the form
-
-    formRef.current.reset();
-    handleClose();
-
-    // Can be used for editing
-    // formRef.current.setState({
-    //   formData: {
-    //     long_link: "sdf",
-    //   },
-    // });
+    await updateLink(
+      short_link_data.id,
+      formData.long_link,
+      formData.short_link
+    )
+      .then(() => {
+        queryClient.invalidateQueries({ queryKey: ["links"] });
+        formRef.current.reset();
+        handleClose();
+      })
+      .catch((err) => {
+        console.error(err);
+        if (err.response.status === 409) {
+          return alert("Short link already exists");
+        }
+        // show alert
+        alert("Error updating link: " + err.message);
+      });
   };
 
   useEffect(() => {
+    if (!short_link_data) {
+      return;
+    }
     formRef.current.setState({
       formData: {
         short_link: short_link_data.short_link,

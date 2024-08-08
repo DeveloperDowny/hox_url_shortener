@@ -43,7 +43,8 @@ declare namespace Paths {
     namespace CreateLink {
         export type RequestBody = Components.Schemas.ShortLink;
         namespace Responses {
-            export type $200 = Components.Schemas.Analytics;
+            export interface $200 {
+            }
         }
     }
     namespace GetAllLinks {
@@ -62,7 +63,7 @@ declare namespace Paths {
             export type $200 = Components.Schemas.Analytics;
         }
     }
-    namespace GetLinks {
+    namespace UpdateLink {
         namespace Parameters {
             export type Sid = number;
         }
@@ -98,13 +99,13 @@ export interface OperationMethods {
     config?: AxiosRequestConfig  
   ): OperationResponse<Paths.CreateLink.Responses.$200>
   /**
-   * getLinks
+   * updateLink
    */
-  'getLinks'(
-    parameters: Parameters<Paths.GetLinks.PathParameters>,
-    data?: Paths.GetLinks.RequestBody,
+  'updateLink'(
+    parameters: Parameters<Paths.UpdateLink.PathParameters>,
+    data?: Paths.UpdateLink.RequestBody,
     config?: AxiosRequestConfig  
-  ): OperationResponse<Paths.GetLinks.Responses.$200>
+  ): OperationResponse<Paths.UpdateLink.Responses.$200>
   /**
    * getAnalyticsById
    */
@@ -138,13 +139,13 @@ export interface PathsDictionary {
   }
   ['/api/short_links/{sid}']: {
     /**
-     * getLinks
+     * updateLink
      */
     'patch'(
-      parameters: Parameters<Paths.GetLinks.PathParameters>,
-      data?: Paths.GetLinks.RequestBody,
+      parameters: Parameters<Paths.UpdateLink.PathParameters>,
+      data?: Paths.UpdateLink.RequestBody,
       config?: AxiosRequestConfig  
-    ): OperationResponse<Paths.GetLinks.Responses.$200>
+    ): OperationResponse<Paths.UpdateLink.Responses.$200>
   }
   ['/api/short_links/{sid}/analytics']: {
     /**

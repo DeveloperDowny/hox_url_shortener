@@ -38,13 +38,6 @@ const spec: OpenAPIV3.Document = {
         responses: {
           "200": {
             description: "",
-            content: {
-              "application/json": {
-                schema: {
-                  $ref: "#/components/schemas/Analytics",
-                },
-              },
-            },
           },
         },
       },
@@ -75,7 +68,7 @@ const spec: OpenAPIV3.Document = {
     },
     "/api/short_links/{sid}": {
       patch: {
-        operationId: "getLinks",
+        operationId: "updateLink",
         parameters: [
           {
             name: "sid",

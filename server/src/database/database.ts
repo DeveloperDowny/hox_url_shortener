@@ -8,7 +8,7 @@ knex.schema.hasTable("shortlinks").then(function (exists) {
   if (!exists) {
     return knex.schema.createTable("shortlinks", function (t) {
       t.increments("id").primary();
-      t.string("short_link", 1024).unique();
+      t.string("short_link", 255).unique();
       t.text("long_link");
       t.text("qr");
     });
@@ -46,29 +46,51 @@ export const getAllAnalytics = async (): Promise<Analytics[]> => {
   // group by sid and count when source qr and when source is link and populate with short link data
   // select sum(if(source = 'qr', 1, 0)) as traffic_from_qr, sum(if(source = 'link', 1, 0)) as traffic_from_link, short_link_data from analytics join shortlinks on analytics.sid = shortlinks.id group by sid;
   // instead of raw query, use knex query builder
+  // const res: Analytics[] = await knex
+  //   .table("analytics")
+  //   .select(
+  //     knex.raw("sum(if(source = 'qr', 1, 0)) as traffic_from_qr"),
+  //     knex.raw("sum(if(source = 'link', 1, 0)) as traffic_from_link"),
+  //     knex.raw(`
+  //     json_object(
+  //       'id', shortlinks.id,
+  //       'long_link', shortlinks.long_link,
+  //       'short_link', shortlinks.short_link,
+  //       'qr', shortlinks.qr
+  //     ) as short_link_data
+  //   `)
+  //   )
+  //   .join("shortlinks", "analytics.sid", "shortlinks.id")
+  //   .groupBy("sid")
+  //   .then((rows) => {
+  //     return rows.map((row: any) => ({
+  //       traffic_from_qr: Number(row.traffic_from_qr),
+  //       traffic_from_link: Number(row.traffic_from_link),
+  //       short_link_data: row.short_link_data,
+  //     }));
+  //   });
+
   const res: Analytics[] = await knex
-    .table("analytics")
-    .select(
-      knex.raw("sum(if(source = 'qr', 1, 0)) as traffic_from_qr"),
-      knex.raw("sum(if(source = 'link', 1, 0)) as traffic_from_link"),
-      knex.raw(`
-      json_object(
-        'id', shortlinks.id,
-        'long_link', shortlinks.long_link,
-        'short_link', shortlinks.short_link,
-        'qr', shortlinks.qr 
-      ) as short_link_data
-    `)
+    .raw(
+      `
+    select sum(if(source = 'qr', 1, 0)) as traffic_from_qr, sum(if(source = 'link', 1, 0)) as traffic_from_link, json_object(
+      'id', shortlinks.id,
+      'long_link', shortlinks.long_link,
+      'short_link', shortlinks.short_link,
+      'qr', shortlinks.qr 
+    ) as short_link_data
+    from analytics right join shortlinks on analytics.sid = shortlinks.id group by shortlinks.id;
+  `
     )
-    .join("shortlinks", "analytics.sid", "shortlinks.id")
-    .groupBy("sid")
     .then((rows) => {
-      return rows.map((row: any) => ({
+      return rows[0].map((row: any) => ({
         traffic_from_qr: Number(row.traffic_from_qr),
         traffic_from_link: Number(row.traffic_from_link),
         short_link_data: row.short_link_data,
       }));
     });
+
+  console.log("res", res);
 
   return res;
 };

@@ -34,7 +34,7 @@ shortLinkRouter.post("/", async (req, res) => {
   const id = await addLink(shortLink);
   shortLink.id = id;
 
-  res.json(shortLink);
+  res.sendStatus(200);
 });
 
 shortLinkRouter.get("/", async (req, res) => {
