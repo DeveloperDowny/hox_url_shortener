@@ -10,6 +10,8 @@
     "openapi": "typegen http://localhost:5000/openapi.json > src/types/openapi.d.ts"
   },
   "dependencies": {
+    "@emotion/cache": "^11.13.1",
+    "@mui/material-nextjs": "^5.16.6",
     "@rjsf/core": "^5.19.4",
     "@rjsf/mui": "^5.19.4",
     "@rjsf/utils": "^5.19.4",

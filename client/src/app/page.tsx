@@ -10,9 +10,9 @@ import React, { useEffect } from "react";
 const page = () => {
   return (
     <div>
-      <div className="">
+      {/* <div className="">
         <AnalyticsCont sid={1} />
-      </div>
+      </div> */}
       <LinkInputForm />
       <div className="mt-[3rem]">
         {" "}

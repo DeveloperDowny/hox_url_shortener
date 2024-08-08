@@ -48,7 +48,7 @@ declare namespace Paths {
     }
     namespace GetAllLinks {
         namespace Responses {
-            export type $200 = Components.Schemas.ShortLink[];
+            export type $200 = Components.Schemas.Analytics[];
         }
     }
     namespace GetAnalyticsById {

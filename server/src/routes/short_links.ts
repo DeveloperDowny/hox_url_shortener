@@ -2,6 +2,7 @@ import express from "express";
 import { ShortLink } from "../../types/types";
 import knex, {
   addLink,
+  getAllAnalytics,
   getAnalyticsById,
   getLinks,
 } from "../database/database";
@@ -31,7 +32,7 @@ shortLinkRouter.post("/", async (req, res) => {
 });
 
 shortLinkRouter.get("/", async (req, res) => {
-  const data = await getLinks();
+  const data = await getAllAnalytics();
 
   res.json(data);
 });

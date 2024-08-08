@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ReactQueryClientProvider } from "@/components/ReactQueryClientProvider";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,12 +20,14 @@ export default function RootLayout({
     <ReactQueryClientProvider>
       <html lang="en">
         <body className={inter.className + " bg-slate-100"}>
-          <div className="max-w-[70vw] pt-[10rem] pb-[5rem] mx-auto">
-            <h1 className="text-3xl w-full text-center">
-              UShort - URL Shortener
-            </h1>
-            <div>{children}</div>
-          </div>
+          <AppRouterCacheProvider>
+            <div className="max-w-[70vw] pt-[10rem] pb-[5rem] mx-auto">
+              <h1 className="text-3xl w-full text-center">
+                UShort - URL Shortener
+              </h1>
+              <div>{children}</div>
+            </div>
+          </AppRouterCacheProvider>
         </body>
       </html>
     </ReactQueryClientProvider>

@@ -17,7 +17,7 @@ const spec: OpenAPIV3.Document = {
               "application/json": {
                 schema: {
                   type: "array",
-                  items: { $ref: "#/components/schemas/ShortLink" },
+                  items: { $ref: "#/components/schemas/Analytics" },
                 },
               },
             },

@@ -1,4 +1,5 @@
 import { getLinks } from "@/api/api";
+import { Analytics } from "@/types/types";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 
@@ -22,7 +23,8 @@ const AllLinks = () => {
   }
   return (
     <div className="flex flex-col gap-[1rem]">
-      {data.map((item, index) => {
+      {data.map((analytic: Analytics, index) => {
+        const item = analytic.short_link_data;
         const handleClick = (e) => {
           downloadBase64File(item.qr, item.short_link);
         };
@@ -46,6 +48,12 @@ const AllLinks = () => {
                 <a target="_blank" href={item.long_link} className="underline">
                   {item.long_link}{" "}
                 </a>
+              </div>
+              <div className="">
+                <b>Traffic from browser:</b> {analytic.traffic_from_link}
+              </div>
+              <div className="">
+                <b>Traffic from QR:</b> {analytic.traffic_from_qr}
               </div>
             </div>{" "}
             <div className="">
