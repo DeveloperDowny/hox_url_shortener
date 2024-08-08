@@ -51,6 +51,21 @@ const spec: OpenAPIV3.Document = {
     },
     "/{short_url}": {
       get: {
+        parameters: [
+          {
+            name: "ref",
+            in: "query",
+            required: false,
+            schema: { type: "string" },
+          },
+          {
+            name: "short_url",
+            in: "path",
+            required: true,
+            schema: { type: "string" },
+          },
+        ],
+
         responses: {
           "302": {
             description: "redirects",

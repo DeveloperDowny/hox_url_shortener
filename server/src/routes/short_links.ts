@@ -6,13 +6,17 @@ import qrcode from "qr-base64";
 
 const shortLinkRouter = express.Router();
 
-const baseLink = "http://localhost:5000/s/";
+const baseLink = "http://localhost:5000/";
 
 shortLinkRouter.post("/", async (req, res) => {
-  let shortLink: ShortLink = req.body;
+  console.log(req.body.long_link);
+
+  let shortLink: ShortLink = {
+    long_link: req.body.long_link,
+  };
   const short_link = randomUUID();
   shortLink.short_link = short_link;
-  const qrStr = baseLink + shortLink + "?ref=qr";
+  const qrStr = baseLink + short_link + "?ref=qr";
   const qr = qrcode(qrStr);
   shortLink.qr = qr;
 

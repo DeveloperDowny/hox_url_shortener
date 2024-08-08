@@ -1,11 +1,15 @@
-import React from "react";
+import React, { FormEvent } from "react";
 
 import Form from "@rjsf/mui";
 import { RJSFSchema, UiSchema } from "@rjsf/utils";
 import validator from "@rjsf/validator-ajv8";
 import { createLink } from "@/api/api";
+import { useQueryClient } from "@tanstack/react-query";
+import { IChangeEvent } from "@rjsf/core";
 
 const LinkInputForm = () => {
+  const formRef = React.useRef(null);
+  const queryClient = useQueryClient();
   const schema: RJSFSchema = {
     type: "object",
     properties: {
@@ -29,13 +33,26 @@ const LinkInputForm = () => {
 
   const log = (type) => console.log.bind(console, type);
 
-  const onSubmit = async ({ formData }, e) => {
+  const onSubmit = async (myObj: IChangeEvent, e: FormEvent) => {
+    const formData = myObj.formData;
+
     const data = await createLink(formData.long_link);
-    console.log(data);
+    queryClient.invalidateQueries({ queryKey: ["links"] });
+    // reset the form
+
+    formRef.current.reset();
+
+    // Can be used for editing
+    // formRef.current.setState({
+    //   formData: {
+    //     long_link: "sdf",
+    //   },
+    // });
   };
 
   return (
     <Form
+      ref={formRef}
       schema={schema}
       uiSchema={uiSchema}
       validator={validator}

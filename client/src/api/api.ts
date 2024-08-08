@@ -13,10 +13,14 @@ export const getLinks = async (): Promise<ShortLink[]> => {
   return res.data;
 };
 
-export const createLink = async (long_link): Promise<ShortLink> => {
+export const createLink = async (new_long_link): Promise<ShortLink> => {
   const client: Client = await api.getClient();
-  const res = await client.createLink({
-    long_link: long_link,
-  });
+  const res = await client.createLink(
+    {},
+    {
+      long_link: new_long_link,
+    },
+    {}
+  );
   return res.data;
 };

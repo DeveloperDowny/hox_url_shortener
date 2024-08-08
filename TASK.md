@@ -3,8 +3,8 @@
 Requirements
 ● [v] Create a React project written in TypeScript. [required] (2 points)
 ● [v] Create an Express.js API written in TypeScript. [required] (2 points)
-● [] Use React Query to maintain server state [required in frontend] (2 points)
-● [] Use Axios to fetch data from the server [required in frontend] (2 points)
+● [v] Use React Query to maintain server state [required in frontend] (2 points)
+● [v] Use Axios to fetch data from the server [required in frontend] (2 points)
 ● [v] Use MySQL, Postgres, or any SQL database of your choice [SQL is required] (2
 points)
 ● [v] Use any ORM such as TypeORM, Bookshelf, or query builder such as Knex of your
@@ -103,3 +103,5 @@ during the interview are allowed.
 scaffolded from scratch.
 ● Ensure a stable network connection.
 ● Candidates are allowed to take short breaks for personal reasons.
+
+

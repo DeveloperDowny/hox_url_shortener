@@ -19,6 +19,16 @@ declare namespace Components {
 declare namespace Paths {
     namespace $ShortUrl {
         namespace Get {
+            namespace Parameters {
+                export type Ref = string;
+                export type ShortUrl = string;
+            }
+            export interface PathParameters {
+                short_url: Parameters.ShortUrl;
+            }
+            export interface QueryParameters {
+                ref?: Parameters.Ref;
+            }
             namespace Responses {
                 export interface $302 {
                 }

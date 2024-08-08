@@ -8,7 +8,8 @@ import cors from "cors";
 
 import * as OpenApiValidator from "express-openapi-validator";
 import { getLinkById } from "./database/database";
-import { link } from "fs";
+import bodyParser from "body-parser";
+import multer from "multer";
 
 dotenv.config();
 
@@ -18,14 +19,18 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(multer);
+/* The line `// app.use(multer);` is currently commented out in the code. If uncommented, it would be
+attempting to use the `multer` middleware in the Express application. */
 
-// app.use(
-//   OpenApiValidator.middleware({
-//     apiSpec: "./public/openapi.json",
-//     validateRequests: false,
-//     validateResponses: false,
-//   })
-// );
+app.use(
+  OpenApiValidator.middleware({
+    apiSpec: "./public/openapi.json",
+    validateRequests: true,
+    validateResponses: true,
+  })
+);
 
 app.use((err, req, res, next) => {
   res.status(err.status || 500).json({
@@ -45,16 +50,20 @@ app.get("/:short_link", async (req, res) => {
   if (ref != "link" && ref != "qr") {
     ref = "link";
   }
-  console.log(ref);
+  console.log("\n\n\n");
+
+  console.log("Source: ", ref);
+  console.log("Short Link: ", "http://localhost:5000/" + req.params.short_link);
 
   const shortLink = await getLinkById(req.params.short_link);
+
   if (!shortLink) {
     return res.send("No Link Found");
   }
+  console.log("Destination URL: ", shortLink.long_link);
+
   res.redirect(shortLink.long_link);
 });
-
-
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);

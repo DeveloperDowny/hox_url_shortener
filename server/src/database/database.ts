@@ -9,7 +9,7 @@ knex.schema.hasTable("shortlinks").then(function (exists) {
     return knex.schema.createTable("shortlinks", function (t) {
       t.increments("id").primary();
       t.string("short_link", 1024);
-      t.string("long_link", 1024);
+      t.text("long_link");
       t.text("qr");
     });
   }

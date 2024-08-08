@@ -19,7 +19,7 @@ export default function RootLayout({
     <ReactQueryClientProvider>
       <html lang="en">
         <body className={inter.className + " bg-slate-100"}>
-          <div className="max-w-[70vw] pt-[10rem] mx-auto">
+          <div className="max-w-[70vw] pt-[10rem] pb-[5rem] mx-auto">
             <h1 className="text-3xl w-full text-center">
               UShort - URL Shortener
             </h1>
