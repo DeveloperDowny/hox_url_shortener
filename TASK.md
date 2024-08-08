@@ -1,4 +1,5 @@
 # Server
+
 - Joi required
 - MySQL
 - ORM
@@ -6,16 +7,22 @@
 - Given a long link, give shortlink
 - You also need to do redirection with the shortlink
 - Track how many users have clicked the link and show it in a dashboard
-    - Just update count and handle race conditions. Anonymous users allowed
+  - Just update count and handle race conditions. Anonymous users allowed
 - Generate QR code for the link
 - Ability to download QR code
 - Track mode of access ?ref=qr or ?ref=link (the default) should be enough
 
+# DB Schema
+
+ShortLinks
+short_link_id: "string",
+long_link: "string",
+qr: "string" # b64 string
+
 # Client
+
 - Edit Link Screen
 - View Link Screen
-
-
 
 Create a tool that allows users to
 shorten URLs

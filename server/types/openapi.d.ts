@@ -6,6 +6,16 @@ import type {
   AxiosRequestConfig,
 } from 'openapi-client-axios'; 
 
+declare namespace Components {
+    namespace Schemas {
+        export interface ShortLink {
+            id?: number;
+            long_link: string;
+            short_link?: string;
+            qr?: string;
+        }
+    }
+}
 declare namespace Paths {
     namespace ApiShortLinks {
         namespace Get {
@@ -15,14 +25,9 @@ declare namespace Paths {
             }
         }
         namespace Post {
-            export interface RequestBody {
-                id?: string;
-                long_link: string;
-            }
+            export type RequestBody = Components.Schemas.ShortLink;
             namespace Responses {
-                export interface $200 {
-                    id?: string;
-                }
+                export type $200 = Components.Schemas.ShortLink;
             }
         }
     }

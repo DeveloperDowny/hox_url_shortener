@@ -3,36 +3,17 @@ import fs from "fs";
 
 const spec: OpenAPIV3.Document = {
   openapi: "3.0.3",
-  info: {
-    title: "URL Shortener",
-    version: "1.0",
-  },
+  info: { title: "URL Shortener", version: "1.0" },
   servers: [{ url: "http://localhost:5000" }],
   paths: {
     "/api/short_links": {
-      get: {
-        responses: {
-            "200" : {
-                description: "",
-                
-            }
-        }
-      },
+      get: { responses: { "200": { description: "" } } },
       post: {
         requestBody: {
           content: {
             "application/json": {
               schema: {
-                type: "object",
-                properties: {
-                  id: {
-                    type: "string",
-                  },
-                  long_link: {
-                    type: "string",
-                  },
-                },
-                required: ["long_link"],
+                $ref: "#/components/schemas/ShortLink",
               },
             },
           },
@@ -43,17 +24,26 @@ const spec: OpenAPIV3.Document = {
             content: {
               "application/json": {
                 schema: {
-                  type: "object",
-                  properties: {
-                    id: {
-                      type: "string",
-                    },
-                  },
+                  $ref: "#/components/schemas/ShortLink",
                 },
               },
             },
           },
         },
+      },
+    },
+  },
+  components: {
+    schemas: {
+      ShortLink: {
+        type: "object",
+        properties: {
+          id: { type: "number" },
+          long_link: { type: "string" },
+          short_link: { type: "string" },
+          qr: { type: "string" },
+        },
+        required: ["long_link"],
       },
     },
   },
