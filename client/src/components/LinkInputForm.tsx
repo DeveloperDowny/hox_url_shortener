@@ -3,8 +3,9 @@ import React from "react";
 import Form from "@rjsf/mui";
 import { RJSFSchema, UiSchema } from "@rjsf/utils";
 import validator from "@rjsf/validator-ajv8";
+import { createLink } from "@/api/api";
 
-const Test = () => {
+const LinkInputForm = () => {
   const schema: RJSFSchema = {
     type: "object",
     properties: {
@@ -28,16 +29,21 @@ const Test = () => {
 
   const log = (type) => console.log.bind(console, type);
 
+  const onSubmit = async ({ formData }, e) => {
+    const data = await createLink(formData.long_link);
+    console.log(data);
+  };
+
   return (
     <Form
       schema={schema}
       uiSchema={uiSchema}
       validator={validator}
       onChange={log("changed")}
-      onSubmit={log("submitted")}
+      onSubmit={onSubmit}
       onError={log("errors")}
     />
   );
 };
 
-export default Test;
+export default LinkInputForm;

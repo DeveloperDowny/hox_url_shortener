@@ -7,9 +7,16 @@ const api = new OpenAPIClientAxios({
 });
 api.init();
 
- 
 export const getLinks = async (): Promise<ShortLink[]> => {
   const client: Client = await api.getClient();
   const res = await client.getAllLinks();
+  return res.data;
+};
+
+export const createLink = async (long_link): Promise<ShortLink> => {
+  const client: Client = await api.getClient();
+  const res = await client.createLink({
+    long_link: long_link,
+  });
   return res.data;
 };
