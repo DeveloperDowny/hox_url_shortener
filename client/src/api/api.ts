@@ -10,6 +10,8 @@ api.init();
 export const getLinks = async (): Promise<Analytics[]> => {
   const client: Client = await api.getClient();
   const res = await client.getAllLinks();
+  // /api/short_links
+  
   return res.data;
 };
 
