@@ -62,7 +62,9 @@ const EditLinkForm = ({
       .catch((err) => {
         console.error(err);
         if (err.response.status === 409) {
-          return alert("Short link already exists");
+          return alert(
+            "Short link already exists. Please choose another URL suffix."
+          );
         }
         // show alert
         alert("Error updating link: " + err.message);

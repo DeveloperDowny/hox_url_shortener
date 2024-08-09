@@ -59,7 +59,7 @@ const AllLinks = () => {
             downloadBase64File(item.qr, item.short_link);
           };
           return (
-            <Collapse key={item.short_link} className="">
+            <Collapse key={item.id} className="">
               <div
                 className="flex gap-[1rem] bg-white rounded-md px-[1rem] py-[1rem] justify-between shadow-md"
                 // key={analytic.short_link_data.id}
