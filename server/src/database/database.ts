@@ -8,9 +8,9 @@ knex.schema.hasTable("shortlinks").then(function (exists) {
   if (!exists) {
     return knex.schema.createTable("shortlinks", function (t) {
       t.increments("id").primary();
-      t.string("short_link", 255).unique();
-      t.text("long_link");
-      t.text("qr");
+      t.string("short_link", 255).unique().notNullable();
+      t.text("long_link").notNullable();
+      t.text("qr").notNullable();
     });
   }
 });
@@ -19,8 +19,8 @@ knex.schema.hasTable("analytics").then(function (exists) {
   if (!exists) {
     return knex.schema.createTable("analytics", function (t) {
       t.increments("id").primary();
-      t.integer("sid").unsigned().references("id").inTable("shortlinks");
-      t.string("source", 255);
+      t.integer("sid").unsigned().references("id").inTable("shortlinks").notNullable();
+      t.string("source", 255).notNullable();
     });
   }
 });

@@ -11,6 +11,9 @@ import { addAnalytics, getLinkById } from "./database/database";
 import bodyParser from "body-parser";
 import multer from "multer";
 
+import swaggerUi from "swagger-ui-express";
+import swaggerDocument from "../public/openapi.json";
+
 dotenv.config();
 
 const app: Express = express();
@@ -23,6 +26,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(multer);
 /* The line `// app.use(multer);` is currently commented out in the code. If uncommented, it would be
 attempting to use the `multer` middleware in the Express application. */
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(
   OpenApiValidator.middleware({
@@ -39,6 +44,11 @@ app.use((err, req, res, next) => {
   });
 });
 app.use(express.static("public"));
+// swagger ui setup file is in public/openapi.json
+
+// const swaggerUi = require('swagger-ui-express');
+// const swaggerDocument = require('./swagger.json');
+
 app.get("/", (req: Request, res: Response) => {
   res.send("Express + TypeScript Server");
 });
@@ -69,4 +79,7 @@ app.get("/:short_link", async (req, res) => {
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
+  console.log(
+    `[server]: API docs can be found at http://localhost:${port}/api-docs`
+  );
 });

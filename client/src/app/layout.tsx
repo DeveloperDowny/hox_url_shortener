@@ -21,7 +21,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className + " bg-slate-100"}>
           <AppRouterCacheProvider>
-            <div className="max-w-[70vw] pt-[10rem] pb-[5rem] mx-auto">
+            <div className="max-w-[70vw] pt-[7rem] pb-[5rem] mx-auto">
               <h1 className="text-3xl w-full text-center">
                 UShort - URL Shortener
               </h1>
